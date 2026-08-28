@@ -1,25 +1,45 @@
-# mini-nmap
+<div align="center">
 
-Python `socket` modülü kullanılarak sıfırdan yazılmış, basit bir port tarayıcı ve banner grabbing aracı. Nmap'in temel mantığını (port tarama + servis bilgisi toplama) anlamak amacıyla eğitim amaçlı geliştirilmiştir.
+# 🔍 mini-nmap
 
-## Özellikler
+**Python `socket` modülü ile sıfırdan yazılmış port tarayıcı ve banner grabbing aracı**
 
-- Belirtilen bir IP aralığında port tarama
-- Açık portlarda HTTP banner grabbing (sunucu bilgisi ve sayfa başlığı çekme)
-- HTML entity çözme (örn. `&#70;` gibi kodları okunabilir hale getirme)
+![Python](https://img.shields.io/badge/Python-3.x-blue?logo=python&logoColor=white)
+![License](https://img.shields.io/badge/License-MIT-green)
+![Status](https://img.shields.io/badge/Status-Aktif%20Geliştirme-yellow)
 
-## Kullanım
+</div>
+
+---
+
+## 📖 Hakkında
+
+`mini-nmap`, Nmap'in temel mantığını (port tarama + servis bilgisi toplama) sıfırdan anlamak amacıyla geliştirilmiş eğitim odaklı bir araçtır. Hiçbir dış kütüphane kullanılmadan, sadece Python'un standart `socket` modülüyle yazılmıştır.
+
+## ✨ Özellikler
+
+| Özellik | Açıklama |
+|---|---|
+| 🔌 Port Tarama | Belirtilen IP aralığında açık portları tespit eder |
+| 🏷️ Banner Grabbing | Açık portlarda HTTP sunucu bilgisi ve sayfa başlığı çeker |
+| 🔤 HTML Decode | `&#70;` gibi HTML entity kodlarını okunabilir metne çevirir |
+| 🛡️ Hata Toleransı | Bağlantı hatalarında çökmez, `try/except` ile korunur |
+
+## 🚀 Kullanım
 
 ```bash
 python mini_nmap.py
 ```
 
 Program sırasıyla şunları soracak:
-- Hedef IP adresi
-- Başlangıç portu
-- Bitiş portu
 
-## Örnek çıktı
+```
+Hedef IP adresini gir: 192.168.1.1
+Başlangıç portu: 1
+Bitiş portu: 500
+```
+
+## 📋 Örnek Çıktı
 
 ```
 192.168.1.1 taranıyor...
@@ -32,24 +52,44 @@ Program sırasıyla şunları soracak:
 Tarama tamamlandı.
 ```
 
-## Nasıl çalışıyor
+## ⚙️ Nasıl Çalışıyor
 
-1. **Port tarama:** Her port için bir socket bağlantısı denenir (`connect_ex`). Bağlantı başarılıysa (`0` dönerse) port açık kabul edilir.
-2. **Banner grabbing:** Açık bulunan her port için basit bir HTTP GET isteği gönderilir, sunucudan gelen cevap okunur.
-3. **Ayrıştırma (parsing):** Gelen cevap metninden `Server:` başlığı ve `<title>` etiketi aranıp çıkarılır.
+1. **Port Tarama** — Her port için `connect_ex()` ile bağlantı denenir. `0` dönerse port açık kabul edilir.
+2. **Banner Grabbing** — Açık portlara basit bir `GET / HTTP/1.1` isteği gönderilir, sunucu cevabı okunur.
+3. **Ayrıştırma (Parsing)** — Cevap metninden `Server:` başlığı ve `<title>` etiketi çıkarılır.
 
-## Uyarı
+## 🗂️ Dosya Yapısı
 
-Bu araç yalnızca **kendi sahip olduğun veya tarama izni verilen** ağlar/cihazlar üzerinde kullanılmalıdır. Başkasına ait sistemlerde izinsiz kullanım yasa dışıdır.
+```
+mini-nmap/
+├── mini_nmap.py      # Ana araç — port tarama + banner grabbing birleşik
+├── tarayici.py        # İlk versiyon — sadece port tarama
+├── banner.py           # İlk versiyon — sadece banner grabbing
+├── nmap_notlar.pdf     # Nmap komut/NSE script referans notları
+└── README.md
+```
 
-## Geliştirme fikirleri (ileride eklenebilir)
+## 🧭 Yol Haritası
 
-- [ ] Farklı protokoller için özel bannerlar (SSH, FTP)
-- [ ] Sonuçları dosyaya kaydetme
-- [ ] Threading ile hızlandırma
-- [ ] Komut satırı argümanları (input() yerine)
+- [ ] SSH, FTP gibi farklı protokoller için özel banner ayrıştırma
+- [ ] Sonuçları `.txt` / `.json` dosyasına kaydetme
+- [ ] `threading` ile çoklu port tarama (hız artışı)
+- [ ] Komut satırı argümanları desteği (`argparse` ile `input()` yerine)
+- [ ] Basit bir CVE eşleştirme (versiyon bilgisine göre bilinen açık arama)
 
-## Gereksinimler
+## ⚠️ Sorumluluk Reddi
 
-- Python 3.x (ek kütüphane gerekmez, sadece standart kütüphane kullanılmıştır)
+Bu araç yalnızca **kendi sahip olduğun veya tarama izni verilen** ağlar/cihazlar üzerinde kullanılmalıdır. Başkasına ait sistemlerde izinsiz kullanım suçtur.
 
+## 🧰 Gereksinimler
+
+- Python 3.x
+- Ek kütüphane gerekmez (sadece standart kütüphane)
+
+---
+
+<div align="center">
+
+Geliştiren: [Marj1nal55](https://github.com/Marj1nal55) · Öğrenme amaçlı geliştirilmektedir 🌱
+
+</div>
