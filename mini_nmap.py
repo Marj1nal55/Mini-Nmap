@@ -37,23 +37,25 @@ def banner_al(hedef_ip, port):
 hedef_ip = input("Hedef IP adresini gir: ")
 baslangic_port = int(input("Başlangıç portu: "))
 bitis_port = int(input("Bitiş portu: "))
-
+dosya = open("tarama_sonucu.txt", "w")
 print(f"\n{hedef_ip} taranıyor...\n")
 
 for port in range(baslangic_port, bitis_port + 1):
     if port_tara(hedef_ip, port):
         print(f"[AÇIK] Port {port}")
+        dosya.write(f"[AÇIK] Port {port}\n")
 
         banner_yazi = banner_al(hedef_ip, port)
         if banner_yazi:
             for satir in banner_yazi.split("\n"):
                 if "Server:" in satir:
                     print(f"    Sunucu: {satir.strip()}")
-
+                    dosya.write(f"   Sunucu: {satir.strip()}\n")
             if "<title>" in banner_yazi:
                 baslangic = banner_yazi.find("<title>") + len("<title>")
                 bitis = banner_yazi.find("</title>")
                 baslik = html.unescape(banner_yazi[baslangic:bitis])
                 print(f"    Başlık: {baslik}")
-
+                dosya.write(f"   Başlık: {baslik}\n")
 print("\nTarama tamamlandı.")
+dosya.close()
